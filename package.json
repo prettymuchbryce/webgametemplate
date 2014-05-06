@@ -2,10 +2,14 @@
   "name": "webgametemplate",
   "version": "0.0.0",
   "description": "A simple web game template for pixi.js",
-  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./app.js"
   },
-  "author": "prettymuchbryce",
-  "license": "MIT"
+  "author": "Bryce Neal",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.1.1",
+    "body-parser": "^1.0.2",
+    "ejs": "^1.0.0"
+  }
 }
