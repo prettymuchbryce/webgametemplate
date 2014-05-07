@@ -1,15 +1,16 @@
-# webgametemplate
+## webgametemplate
 
-A simple jumping off point for making HTML5 games with pixi.js. 
+A simple jumping off point for making cross-platform HTML5 games with pixi.js. 
 
-# What's included ?
+### what's included ?
 
 - node.js / express to serve the project
 - normalize.css and HTML5 boilerplate
 - pixi.js
+- some pixi initialization/resizing example code
 - jquery
 
-# Instructions
+### instructions
 
 - clone
 - npm install
