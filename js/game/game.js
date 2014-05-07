@@ -78,8 +78,8 @@ var Game = function(element) {
 
         //Components
         if (width < 800) {
-			textContainer.scale = new PIXI.Point(0.20, 0.20);
-		} else if (width < 1550) {
+			textContainer.scale = new PIXI.Point(0.30, 0.30);
+		} else if (width < 1400) {
 			textContainer.scale = new PIXI.Point(0.50, 0.50);
 		} else {
 			textContainer.scale = new PIXI.Point(1, 1);
