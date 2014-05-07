@@ -3,6 +3,9 @@ var Game = function(element) {
 	var renderer;
 	var filter;
 	var textContainer;
+	var squares = [];
+	
+	var lastTime = Date.now();
 
 	(function initPixi() {
 		stage = new PIXI.Stage(0xe74c3c);
@@ -11,12 +14,12 @@ var Game = function(element) {
 	})();
 
 	(function startUpdateLoop() {
-		requestAnimFrame(requestAnimationFrame);
+		requestAnimFrame(render);
+		setInterval(update, 60 / 1000);
 	})();
 
 	(function addSomeTestContent() {		
 		textContainer = new PIXI.DisplayObjectContainer();
-		stage.addChild(textContainer);
 
 		var text = new PIXI.Text("webgametemplate", {font:"100px Helvetica", fill:"#2b2b2b"});
 		text.x = -text.width/2;
@@ -29,7 +32,18 @@ var Game = function(element) {
 		textContainer.addChild(moreText);
 
 		filter = new PIXI.PixelateFilter();
-		textContainer.filters = [filter];
+		stage.filters = [filter];
+
+		for (var i = 0; i < 500; i++) {
+			var sprite = new PIXI.Text(":D", {font:"20px Helvetica", fill:"#c0392b"});
+			sprite.x = -100 + Math.random() * 2100;
+			sprite.y = -100 + Math.random() * 1000;
+			squares.push(sprite);
+			stage.addChild(sprite);
+		}
+
+		stage.addChild(textContainer);
+
 	})();
 
 	(function setupResize() {
@@ -65,19 +79,30 @@ var Game = function(element) {
 		}
 	}
 
-	function requestAnimationFrame() {
-		update();
-		render();
-		requestAnimFrame(requestAnimationFrame);
+	function update() {
+		var now = Date.now();
+		var elapsed = now - lastTime;
+		updateScene(elapsed);
+		lastTime = now;
 	}
 
 	function render() {
 		renderer.render(stage);
+		requestAnimFrame(render);
 	}
 
-	function update() {
+	function updateScene(elapsed) {
 		filter.size = new PIXI.Point(Math.random()*2, Math.random()*2);
 		textContainer.x = renderer.view.width/2;
 		textContainer.y = renderer.view.height/3;
+
+		for (var i = 0; i < squares.length; i++) {
+			squares[i].x += 0.09 * elapsed;
+			//squares[i].rotation+=0.1;
+			if (squares[i].x > 2000) {
+				squares[i].y = -100 + Math.random() * 1000;
+				squares[i].x = -100;
+			}
+		}
 	}
 };
