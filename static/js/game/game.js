@@ -2,7 +2,9 @@ var Game = function(element) {
 	var stage;
 	var renderer;
 	var filter;
+	var squaresFilter;
 	var textContainer;
+	var squaresContainer;
 	var squares = [];
 	
 	var lastTime = Date.now();
@@ -26,22 +28,27 @@ var Game = function(element) {
 		text.y = -text.height/2;
 		textContainer.addChild(text);
 
-		var moreText = new PIXI.Text("it works", {font:"50px Helvetica", fill:"#ecf0f1"});
+		var moreText = new PIXI.Text("git clone git@github.com:prettymuchbryce/webgametemplate.git\nnpm install\nnpm start\nhttp://127.0.0.1:3000", {font:"30px Consolas", fill:"#ecf0f1"});
 		moreText.x = -moreText.width/2;
-		moreText.y = -moreText.height/2 + 70;
+		moreText.y = -moreText.height/2 + 200;
 		textContainer.addChild(moreText);
 
 		filter = new PIXI.PixelateFilter();
 		stage.filters = [filter];
+		squaresFilter = new PIXI.PixelateFilter();
+
+		squaresContainer = new PIXI.DisplayObjectContainer();
+		squaresContainer.filters = [squaresFilter];
 
 		for (var i = 0; i < 500; i++) {
 			var sprite = new PIXI.Text(":D", {font:"20px Helvetica", fill:"#c0392b"});
 			sprite.x = -100 + Math.random() * 2100;
 			sprite.y = -100 + Math.random() * 1000;
 			squares.push(sprite);
-			stage.addChild(sprite);
+			squaresContainer.addChild(sprite);
 		}
 
+		stage.addChild(squaresContainer);
 		stage.addChild(textContainer);
 
 	})();
@@ -92,15 +99,16 @@ var Game = function(element) {
 	}
 
 	function updateScene(elapsed) {
+		squaresFilter.size = new PIXI.Point(Math.random()*20, 1);
 		filter.size = new PIXI.Point(Math.random()*2, Math.random()*2);
 		textContainer.x = renderer.view.width/2;
 		textContainer.y = renderer.view.height/3;
 
 		for (var i = 0; i < squares.length; i++) {
-			squares[i].x += 0.5;
+			squares[i].x += 5;
 			if (squares[i].x > 2000) {
-				squares[i].y = -100 + Math.random() * 1000;
 				squares[i].x = -100;
+				squares[i].y = -100 + Math.random() * 1000;
 			}
 		}
 	}
