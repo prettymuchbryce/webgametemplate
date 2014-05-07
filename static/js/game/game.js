@@ -97,8 +97,7 @@ var Game = function(element) {
 		textContainer.y = renderer.view.height/3;
 
 		for (var i = 0; i < squares.length; i++) {
-			squares[i].x += 0.09 * elapsed;
-			//squares[i].rotation+=0.1;
+			squares[i].x += 0.5;
 			if (squares[i].x > 2000) {
 				squares[i].y = -100 + Math.random() * 1000;
 				squares[i].x = -100;
