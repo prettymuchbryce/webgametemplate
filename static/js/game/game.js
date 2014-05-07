@@ -10,14 +10,6 @@ var Game = function(element) {
 		element.append(renderer.view);
 	})();
 
-	(function setupResize() {
-		window.addEventListener('resize', function() {
-		    resize();
-		});
-		window.onorientationchange = resize;
-		resize();
-	})();
-
 	(function startUpdateLoop() {
 		requestAnimFrame(requestAnimationFrame);
 	})();
@@ -31,13 +23,21 @@ var Game = function(element) {
 		text.y = -text.height/2;
 		textContainer.addChild(text);
 
-		var moreText = new PIXI.Text("it works", {font:"30px Helvetica", fill:"#ecf0f1"});
+		var moreText = new PIXI.Text("it works", {font:"50px Helvetica", fill:"#ecf0f1"});
 		moreText.x = -moreText.width/2;
-		moreText.y = -moreText.height/2 + 50;
+		moreText.y = -moreText.height/2 + 70;
 		textContainer.addChild(moreText);
 
 		filter = new PIXI.PixelateFilter();
 		textContainer.filters = [filter];
+	})();
+
+	(function setupResize() {
+		window.addEventListener('resize', function() {
+		    resize();
+		});
+		window.onorientationchange = resize;
+		resize();
 	})();
 
 	function resize() {
@@ -45,12 +45,24 @@ var Game = function(element) {
 		var h = 640;
 		var width = window.innerWidth || document.body.clientWidth; 
 		var height = window.innerHeight || document.body.clientHeight; 
+		        if (height < h) {
+        	height = h;
+        }
         var ratio = height / h;
         var view = renderer.view;
         view.style.height = h * ratio +"px";
         var newWidth = (width / ratio);
         view.style.width = width +"px";
         renderer.resize(newWidth , h);
+
+        //Components
+        if (width < 800) {
+			textContainer.scale = new PIXI.Point(0.20, 0.20);
+		} else if (width < 1550) {
+			textContainer.scale = new PIXI.Point(0.50, 0.50);
+		} else {
+			textContainer.scale = new PIXI.Point(1, 1);
+		}
 	}
 
 	function requestAnimationFrame() {
